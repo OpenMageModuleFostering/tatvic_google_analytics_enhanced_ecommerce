@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "Tatvic",
     "homepage": "",
-    "description": "#Minor Bug Fixes",
+    "description": "Compatibility with Magento's Search Functionality",
     "authors": [
     {
-        "name": "Divyesh",
-        "email": "divyesh@tatvic.com"
+        "name": "Khushboo Joshi",
+        "email": "khushboo@tatvic.com"
     }
 ],
     "suggest": {

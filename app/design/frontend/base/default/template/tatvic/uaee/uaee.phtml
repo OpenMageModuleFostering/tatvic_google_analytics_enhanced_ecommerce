@@ -11,7 +11,7 @@
         }
     </script> 
 
-    <?php if (!Mage::getStoreConfigFlag('tatvic_uaee/ecommerce/gtmid')) { ?>			
+    <?php if (!Mage::getStoreConfigFlag('tatvic_uaee/ecommerce/gtmid')) { ?>            
         <!-- Google Tag Manager -->
         <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T55T8X"
                           height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -318,7 +318,7 @@
                                     array('attribute' => 'sku', 'like' => '%' . $_q . '%'),
                                     array('attribute' => 'entity_id', 'like' => '%' . $_q . '%')
                                 )
-                        )->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
+                        )->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
 
         $catIds = "";
         ?>
@@ -375,7 +375,7 @@
         if (isset($_COOKIE['tvc_metadata'])) {
 
             $tvc_metadata = array(
-                'plugin_version' => '2.0.3',
+                'plugin_version' => '2.0.7',
                 'current_pkg' => Mage::getDesign()->getPackageName(),
                 'current_theme' => Mage::getDesign()->getTheme('frontend'),
                 'Plugin_data' => array('checkout_url' => Mage::getStoreConfig('tatvic_uaee/ecommerce/checkout_url'),
