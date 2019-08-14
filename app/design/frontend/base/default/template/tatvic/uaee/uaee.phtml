@@ -112,7 +112,7 @@
             ?>
                 var homeObject = {};
             <?php
-            $category = new Mage_Catalog_Model_Category();
+            $category = Mage::getSingleton('catalog/category');
             $category->load($this->getHomeId());
             $collection = $category->getProductCollection();
             $collection->addAttributeToSelect('*')->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
