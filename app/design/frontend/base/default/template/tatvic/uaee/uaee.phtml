@@ -1,3 +1,4 @@
+<?php /** */ ?>
 <?php if ($this->isActive()):
     ?>
 
@@ -10,7 +11,7 @@
         }
     </script> 
 
-    <?php if (!Mage::getStoreConfigFlag('tatvic_uaee/ecommerce/gtmid')) { ?>            
+    <?php if (!Mage::getStoreConfigFlag('tatvic_uaee/ecommerce/gtmid')) { ?>			
         <!-- Google Tag Manager -->
         <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T55T8X"
                           height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -88,14 +89,15 @@
         //exec_tvc_t_sth = true;
 
     <?php
-
-//Call the filter/sorting options for the Product Collections.     
-    $tvc_filteroptions = Mage::getBlockSingleton('catalog/product_list_toolbar');
-    $currentpage = (int) ($this->getRequest()->getParam('p')) ? $this->getRequest()->getParam('p') : 1;
-
-// Use Magento's session functionality
-    $tvc_setpage = Mage::getSingleton('core/session')->setcurrpage($currentpage);
-    $tvc_getpage = Mage::getSingleton('core/session')->getcurrpage();
+    $_SESSION["limit"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getLimit();
+    $_SESSION["direction"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getCurrentDirection();
+    $_SESSION["order"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getCurrentOrder();
+    $page = $this->getRequest()->getParam('p');
+    if ($page != "") {
+        $_SESSION["page"] = $page;
+    } else {
+        $_SESSION["page"] = 1;
+    }
     ?>
 
     <?php
@@ -110,13 +112,10 @@
             ?>
                 var homeObject = {};
             <?php
-            $category = Mage::getSingleton('catalog/category');
+            $category = new Mage_Catalog_Model_Category();
             $category->load($this->getHomeId());
-             $collection = $category->getProductCollection();
-            $collection->addAttributeToSelect('*')
-                                ->addAttributeToSort($tvc_filteroptions->getCurrentOrder(), $tvc_filteroptions->getCurrentDirection())
-                                ->setPageSize($tvc_filteroptions->getLimit())
-                                ->setCurPage($tvc_getpage);
+            $collection = $category->getProductCollection();
+            $collection->addAttributeToSelect('*')->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
             $products = $collection->getItems();
             $catName = $category->getName();
             $catIds = "";
@@ -171,7 +170,7 @@
                     <?php $catIds = "";
                     $position++;
                 endif;
-            } $currentpage = 1; ?>
+            } $_SESSION["page"] = 1; ?>
                 exec_tvc_t_hi = true;
 
 
@@ -235,11 +234,7 @@
         $catId = $_category_detail->getId();
         $catName = $_category_detail->getName();
         $category = Mage::getSingleton('catalog/category')->load($catId);
-        $collection = $category->getProductCollection()
-                            ->addAttributeToSelect('*')
-                            ->addAttributeToSort($tvc_filteroptions->getCurrentOrder(), $tvc_filteroptions->getCurrentDirection())
-                            ->setPageSize($tvc_filteroptions->getLimit())
-                            ->setCurPage($tvc_getpage);
+        $collection = $category->getProductCollection()->addAttributeToSelect('*')->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
         $catIds = "";
         $position = 1;
         $products = $collection->getItems();
@@ -286,7 +281,7 @@
 
                 <?php $catIds = "";
                 $position++;
-                $currentpage = 1;
+                $_SESSION["page"] = 1;
             endif;
         } ?>
             catName = "<?php echo $catName; ?>";
@@ -304,7 +299,6 @@
     if (strpos($this->getRequest()->getPathInfo(), '/catalogsearch/result/') !== false):
 
         $_q = addslashes(Mage::app()->getRequest()->getQuery('q'));
-
         ?>
 
             var catalogSearch = {};
@@ -312,22 +306,25 @@
         <?php
         $position = 1;
 
-$query = Mage::helper("catalogSearch")->getQuery();
-$query->setQueryText($_q);
-$collection = Mage::getResourceModel("catalog/product_collection");
-$collection = $query->getSearchCollection();
-$collection->addSearchFilter($_q);
-$collection->addAttributeToSelect("*")
-                    ->setOrder($tvc_filteroptions->getCurrentOrder(),$tvc_filteroptions->getCurrentDirection())
-                    //->addAttributeToSort($tvc_filteroptions->getCurrentOrder(),$tvc_filteroptions->getCurrentDirection())
-                    ->setPageSize($tvc_filteroptions->getLimit())
-                    ->setCurPage($tvc_getpage);
+        $_Products = Mage::getSingleton('catalog/product')
+                        ->getCollection()
+                        ->addAttributeToSelect('*')
+                        ->addAttributeToFilter(
+                                array(
+                                    array('attribute' => 'name', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'price', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'description', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'url_key', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'sku', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'entity_id', 'like' => '%' . $_q . '%')
+                                )
+                        )->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
 
         $catIds = "";
         ?>
 
         <?php
-        foreach ($collection as $_product) {
+        foreach ($_Products as $_product) {
             ?>
 
             <?php
@@ -345,15 +342,15 @@ $collection->addAttributeToSelect("*")
                     $product_sku = $_product->getId();
                 endif;
                 ?>
-                    catalogSearch['<?php echo $_product->getProductUrl(); ?>'] = {
-                        'sku': '<?php echo addslashes($product_sku); ?>',
+                    t_product_url_2 = "<?php echo trim(Mage::getUrl($_product->getUrlPath()), "/"); ?>";
+                    catalogSearch['<?php echo $_product->getProductUrl(); ?>'] = {'sku': '<?php echo addslashes($product_sku); ?>',
                         'Name': '<?php echo addslashes($_product->getName()); ?>',
                         'price': '<?php echo $_product->getFinalPrice(); ?>',
                         'id': '<?php echo $_product->getId(); ?>',
                         'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
                         'position': '<?php echo $position; ?>',
                         'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)); ?>',
-                        'url2':  '<?php echo $_product->getProductUrl(); ?>',
+                        'url2': t_product_url_2,
                         'visibility': '<?php echo $_product->getVisibility(); ?>',
                         'instock': '<?php echo $inStock; ?>',
                         'stock': "<?php echo Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($_product->getId())->getQty(); ?>"
@@ -364,7 +361,7 @@ $collection->addAttributeToSelect("*")
                 <?php $catIds = "";
                 $position++;
             endif;
-        } $currentpage = 1; ?>
+        } $_SESSION["page"] = 1; ?>
             exec_tvc_t_cs = true;
 
     <?php endif;
@@ -378,7 +375,7 @@ $collection->addAttributeToSelect("*")
         if (isset($_COOKIE['tvc_metadata'])) {
 
             $tvc_metadata = array(
-                'plugin_version' => '2.0.10',
+                'plugin_version' => '2.0.3',
                 'current_pkg' => Mage::getDesign()->getPackageName(),
                 'current_theme' => Mage::getDesign()->getTheme('frontend'),
                 'Plugin_data' => array('checkout_url' => Mage::getStoreConfig('tatvic_uaee/ecommerce/checkout_url'),
@@ -547,7 +544,7 @@ $collection->addAttributeToSelect("*")
 
             $data[$i]['id'] = $item->getProductId();
 
-            $data[$i]['qty1'] = $item->getQtyToInvoice();
+            $data[$i]['qty'] = $item->getQtyToInvoice();
 
             $data[$i]['brand'] = $item->getProduct()->$getProductBrand();
             ?>
@@ -561,24 +558,24 @@ $collection->addAttributeToSelect("*")
         ?>
                     transactionObject = {};
                     transactionObject = {
-                        'tid': '<?php echo $_order->getIncrementId(); ?>',
+                        'tid': '<?php echo $_order->getData($this->getTransactionIdField()) ?>',
                         'aid': '<?php echo addslashes(Mage::app()->getStore()->getName()) ?>',
                         'revenue': '<?php echo $_order->getGrandTotal() ?>',
                         'tax': '<?php echo $_order->getTaxAmount() ?>',
                         'shipping': '<?php echo $_order->getShippingInclTax() ?>',
                         'ccode': '<?php echo addslashes($_order->getCouponCode()); ?>'
                     }
-                    
+                    //t_oid = '<?php echo $_order->getIncrementId(); // ?>';
                     //exec_tvc_t_thnx = true;
 
-                    for (tvc_item in orderObject) {
+                    for (item in orderObject) {
                         ga('ec:addProduct', {
-                            'id': orderObject[tvc_item]['sku'],
-                            'name': orderObject[tvc_item]['Name'],
-                            'category': orderObject[tvc_item]['categories'],
-                            'brand': orderObject[tvc_item]['brand'],
-                            'price': orderObject[tvc_item]['Price'],
-                            'quantity': orderObject[tvc_item]['qty1']
+                            'id': orderObject[item]['sku'],
+                            'name': orderObject[item]['Name'],
+                            'category': orderObject[item]['categories'],
+                            'brand': orderObject[item]['brand'],
+                            'price': orderObject[item]['Price'],
+                            'quantity': orderObject[item]['qty']
                         });
                     }
 

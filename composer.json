@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "Tatvic",
     "homepage": "",
-    "description": "Quick & Urgent Module Update notice",
+    "description": "Adds new Google Universal Analytics to Magento Store.",
     "authors": [
     {
-        "name": "Khushboo",
-        "email": "khushboo@tatvic.com"
+        "name": "Divyesh",
+        "email": "divyesh@tatvic.com"
     }
 ],
     "suggest": {
