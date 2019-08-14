@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Tatvic_Google_Analytics_Enhanced_Ecommerce",
+    "type": "magento-module",
+    "license": "Tatvic",
+    "homepage": "",
+    "description": "Provides integration between Google Analytics Enhanced Ecommerce and Magento",
+    "authors": [
+    {
+        "name": "Vishal",
+        "email": "divyesh@tatvic.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
