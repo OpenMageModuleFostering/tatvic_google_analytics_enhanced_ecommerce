@@ -3,10 +3,10 @@
     "type": "magento-module",
     "license": "Tatvic",
     "homepage": "",
-    "description": "Minor Bug Fixes & Optimization",
+    "description": "Deprecation of the feature to use User's GTM with our extension.",
     "authors": [
     {
-        "name": "Khushboo Joshi",
+        "name": "Khushboo",
         "email": "khushboo@tatvic.com"
     }
 ],

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package
- * @author Dvs.spy (divyesh@tatvic.com)
+ * @author (khushboo@tatvic.com)
  * @license Tatvic Enhanced Ecommerce
  */
 class Tatvic_Uaee_Model_System_Config_Source_Addto
