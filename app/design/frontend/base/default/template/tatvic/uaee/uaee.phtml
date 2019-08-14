@@ -72,13 +72,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 					}
 			}
 			
+
     $routeName = Mage::app()->getRequest()->getRouteName();
     $identifier = Mage::getSingleton('cms/page')->getIdentifier();
     if ($routeName == 'cms' && $identifier == 'home') :   
     ?>	
 			exec_tvc_t_hi = true;
-		
-				
 	<?php 
 
 	endif; 
@@ -152,10 +151,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <?php
 		
-		if(isset($_COOKIE['tvc_metadata'])){
 		
-		
-		}//end cookie block
 		
         $sku_id = $this->getProduct()->getId();
         $product = Mage::getModel('catalog/product')->load($sku_id);
@@ -228,9 +224,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 			var checkoutStep = 1;
 		
 			var LoggedIn = false;
+
 			<?php endif; 
 			$catIds = "";
 			$items = $cart->getAllItems();
+
         foreach ($items as $itemId=>$item) {
 
             $productId = $item->getProduct()->getId();
@@ -245,10 +243,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 			$optionValue = $_resource->getAttributeRawValue($_item, $this->getBrandAttr(), Mage::app()->getStore());
 			//echo $optionvalue;
 			$_product = Mage::getModel('catalog/product')->load($productId);
-            ?>
-			
-				
-				 <?php $cats = $item->getProduct()->getCategoryIds();
+            
+            $cats = $item->getProduct()->getCategoryIds();
 								foreach ($cats as $category_id) {
 								   $_cat = Mage::getModel('catalog/category')->load($category_id) ;
 								

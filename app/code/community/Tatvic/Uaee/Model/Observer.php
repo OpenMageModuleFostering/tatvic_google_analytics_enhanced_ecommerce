@@ -74,7 +74,7 @@
 				
 				//execute post
 				$result = curl_exec($ch);
-
+					
 				//close connection
 				curl_close($ch);
 		}
@@ -89,7 +89,7 @@
 			}
 		}
 		public function tatvicProductLoadAfter(Varien_Event_Observer $observer){
-			$validPages = array('index','category','result');
+			$validPages = array('homepage','category','result');
 			if(in_array($this->tatvic_page(),$validPages)){
 			?>
 			<script>
@@ -125,6 +125,7 @@
 				foreach ($collection as $product)
 				{
 					$temp = Mage::getModel('catalog/product')->load($product->getId());
+					
 				}
 		}
 		public function tatvic_JSON($page){
@@ -151,7 +152,7 @@
 			$this->JSONobj = 'productObject';
 		}
 		
-		if($page == 'index'){
+		if($page == 'homepage'){
 			?>
 			
 				var homeObject = homeObject || {};
@@ -163,10 +164,15 @@
 	}
 	public function tatvic_page(){
 		$page = Mage::app()->getRequest()->getControllerName();
+
+		$route = Mage::app()->getRequest()->getRouteName(); 
+		$pageidentifier = Mage::getSingleton('cms/page')->getIdentifier(); 
+		if($route == 'cms' && $pageidentifier == 'home') { 
+			$page='homepage';	
+		}
+		
 		return $page;	
 	}
-
-	// Extra codes..
 	
 	
 	

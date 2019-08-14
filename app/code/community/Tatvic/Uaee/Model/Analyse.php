@@ -5,7 +5,7 @@ class Tatvic_Uaee_Model_Analyse{
 	
 	 public function __construct() {
         $this->helper = Mage::helper('tatvic_uaee');
-	
+		//static $position = 0;
     }
 	
 	public function tatvic_categoryList($categories){

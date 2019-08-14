@@ -6,6 +6,7 @@
         </Tatvic_Uaee>
     </modules>
     <global>
+
         <models>
             <tatvic_uaee>
                 <class>Tatvic_Uaee_Model</class>
@@ -54,33 +55,30 @@
                 </tatvic_uaee>
             </updates>
         </layout>
-		<events>
 		
+        <events>
 			<catalog_product_load_after>
 				<observers>
-					<Tatvic_Uaee_Model_Observer>
+					<tatvic_uaee>
 						<type>singleton</type>
 						<class>tatvic_uaee/observer</class>
 						<method>tatvicProductLoadAfter</method>
-				   </Tatvic_Uaee_Model_Observer>
+				   </tatvic_uaee>
 				</observers>
 			</catalog_product_load_after>
 			
 			<catalog_block_product_list_collection>
 				<observers>
-					<Tatvic_Uaee_Model_Observer>
+					<tatvic_uaee>
 						<type>singleton</type>
 						<class>tatvic_uaee/observer</class>
 						<method>tatvicProductList</method>
-				   </Tatvic_Uaee_Model_Observer>
+				   </tatvic_uaee>
 				</observers>
 			</catalog_block_product_list_collection>
-			
-            
-		</events>
-       
-    
+		</events>       
     </frontend>
+
     <adminhtml>
         <acl>
             <resources>
