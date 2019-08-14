@@ -378,7 +378,7 @@ $collection->addAttributeToSelect("*")
         if (isset($_COOKIE['tvc_metadata'])) {
 
             $tvc_metadata = array(
-                'plugin_version' => '2.0.8',
+                'plugin_version' => '2.0.9',
                 'current_pkg' => Mage::getDesign()->getPackageName(),
                 'current_theme' => Mage::getDesign()->getTheme('frontend'),
                 'Plugin_data' => array('checkout_url' => Mage::getStoreConfig('tatvic_uaee/ecommerce/checkout_url'),
@@ -547,7 +547,7 @@ $collection->addAttributeToSelect("*")
 
             $data[$i]['id'] = $item->getProductId();
 
-            $data[$i]['qty'] = $item->getQtyToInvoice();
+            $data[$i]['qty1'] = $item->getQtyToInvoice();
 
             $data[$i]['brand'] = $item->getProduct()->$getProductBrand();
             ?>
@@ -571,14 +571,14 @@ $collection->addAttributeToSelect("*")
                     
                     //exec_tvc_t_thnx = true;
 
-                    for (item in orderObject) {
+                    for (tvc_item in orderObject) {
                         ga('ec:addProduct', {
-                            'id': orderObject[item]['sku'],
-                            'name': orderObject[item]['Name'],
-                            'category': orderObject[item]['categories'],
-                            'brand': orderObject[item]['brand'],
-                            'price': orderObject[item]['Price'],
-                            'quantity': orderObject[item]['qty']
+                            'id': orderObject[tvc_item]['sku'],
+                            'name': orderObject[tvc_item]['Name'],
+                            'category': orderObject[tvc_item]['categories'],
+                            'brand': orderObject[tvc_item]['brand'],
+                            'price': orderObject[tvc_item]['Price'],
+                            'quantity': orderObject[tvc_item]['qty1']
                         });
                     }
 
