@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "Tatvic",
     "homepage": "",
-    "description": "Provides integration between Google Analytics Enhanced Ecommerce and Magento",
+    "description": "Quick & Urgent Module Update notice",
     "authors": [
     {
-        "name": "Vishal",
-        "email": "divyesh@tatvic.com"
+        "name": "Khushboo",
+        "email": "khushboo@tatvic.com"
     }
 ],
     "suggest": {

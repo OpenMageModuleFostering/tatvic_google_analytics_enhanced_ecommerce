@@ -10,6 +10,7 @@ class Tatvic_Uaee_Model_System_Config_Source_Addto
     {
         return array(
             array('value' => 'head', 'label'=>Mage::helper('tatvic_uaee')->__('Head')),
+          //  array('value' => 'before_body_end', 'label'=>Mage::helper('tatvic_uaee')->__('Before Body End')),
         );
     }
 }

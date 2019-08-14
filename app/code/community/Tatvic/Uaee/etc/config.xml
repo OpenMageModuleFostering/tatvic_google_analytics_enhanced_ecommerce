@@ -2,11 +2,10 @@
 <config>
     <modules>
         <Tatvic_Uaee>
-            <version>1.0.0</version>
+            <version>2.0.10</version>
         </Tatvic_Uaee>
     </modules>
     <global>
-
         <models>
             <tatvic_uaee>
                 <class>Tatvic_Uaee_Model</class>
@@ -31,21 +30,6 @@
             </tatvic_uaee_setup>
         </resources>
 		
-		
-		<events>
-            <admin_system_config_changed_section_tatvic_uaee>
-                <observers>
-                    <tatvic_uaee>
-                        <type>singleton</type>
-                        <class>tatvic_uaee/observer</class>
-                        <method>adminSystemConfigChangedSection</method>
-                    </tatvic_uaee>
-                </observers>
-            </admin_system_config_changed_section_tatvic_uaee>
-			
-        </events>
-		
-		
 	</global>
     <frontend>
         <layout>
@@ -56,29 +40,9 @@
             </updates>
         </layout>
 		
-        <events>
-			<catalog_product_load_after>
-				<observers>
-					<tatvic_uaee>
-						<type>singleton</type>
-						<class>tatvic_uaee/observer</class>
-						<method>tatvicProductLoadAfter</method>
-				   </tatvic_uaee>
-				</observers>
-			</catalog_product_load_after>
-			
-			<catalog_block_product_list_collection>
-				<observers>
-					<tatvic_uaee>
-						<type>singleton</type>
-						<class>tatvic_uaee/observer</class>
-						<method>tatvicProductList</method>
-				   </tatvic_uaee>
-				</observers>
-			</catalog_block_product_list_collection>
-		</events>       
+       
+    
     </frontend>
-
     <adminhtml>
         <acl>
             <resources>
@@ -99,16 +63,13 @@
                 </admin>
             </resources>
         </acl>
+        <layout>
+            <updates>
+                <index>
+                    <file>tatvic/uaee.xml</file>
+                </index>
+            </updates>
+        </layout>
     </adminhtml>
-    <default>
-        <tatvic_uaee>
-            <ecommerce>
-                <transaction_id>id</transaction_id>
-            </ecommerce>
-			<general>
-				<installMail>0</installMail>
-				<uninstallMail>0</uninstallMail>
-			</general>
-        </tatvic_uaee>
-    </default>
+    
 </config>
