@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Tatvic_Google_Analytics_Enhanced_Ecommerce",
+    "name": "OpenMageModuleFostering\/Tatvic_Google_Analytics_Enhanced_Ecommerce",
     "type": "magento-module",
     "license": "Tatvic",
     "homepage": "",
     "description": "Deprecation of the feature to use User's GTM with our extension.",
     "authors": [
-    {
-        "name": "Khushboo",
-        "email": "khushboo@tatvic.com"
-    }
-],
+        {
+            "name": "Khushboo",
+            "email": "khushboo@tatvic.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
